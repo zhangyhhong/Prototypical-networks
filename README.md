@@ -2,7 +2,7 @@
 
 ## 训练原型网络
 
-train-prototypical-networks(../master/train-prototypical-networks.py)用于训练。
+train-prototypical-networks(./train-prototypical-networks.py)用于训练。
 
 ## 测试网络
 
@@ -12,9 +12,9 @@ test-prototypical-networks(../master/test-prototypical-networks.py)用于测试�
 
 ## 结果可视化
 
-test.ipynb(../master/test.ipynb)用于和源代码比较，看是否有效。
+test.ipynb(./test.ipynb)用于和源代码比较，看是否有效。
 
-summary_result(../master/summary_result.py)用于对多种方法生成的结果进行结果统计和可视化。
+summary_result(./summary_result.py)用于对多种方法生成的结果进行结果统计和可视化。
 
-PR_AUC(../master/PR_AUC.py)用于对结果进行PR和AUC的计算，以及可视化。
+PR_AUC(./PR_AUC.py)用于对结果进行PR和AUC的计算，以及可视化。
 
