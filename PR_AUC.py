@@ -15,6 +15,11 @@ import seaborn as sns
 from scipy.stats import norm
 
 class PRHelper():
+    def __init__(self,fin):
+        self._fin = fin
+        self._fout = fin+".png"
+        print(self._fin)
+
 
     def Find_Optimal_Cutoff(self,target, predicted):
         """ Find the optimal probability cutoff point for a classification model related to event rate
@@ -33,29 +38,18 @@ class PRHelper():
         i = np.arange(len(tpr))
         roc = pd.DataFrame({'tf' : pd.Series(tpr-(1-fpr), index=i), 'threshold' : pd.Series(threshold, index=i)})
         roc_t = roc.ix[(roc.tf-0).abs().argsort()[:1]]
-
         return list(roc_t['threshold'])
 
     def show_thres(self,label,probality):
         best_threshold = self.Find_Optimal_Cutoff(label,probality)
         print(best_threshold)
 
-
-    def __init__(self,fin):
-        self._fin = fin
-        self._fout = fin+".png"
-        print(self._fin)
-
     def run(self):
-
         rs=pd.read_csv(self._fin,names=['probality','label'],header=0,index_col=0)
-        #rs['label'] =rs['label'].apply(lambda x: 0  if x==1 else 1)
-        #rs['probality'] =rs['probality'].apply(lambda x:1-x)
         print(rs.shape)
 
         same_df = rs[rs['label'] == 0]
         diff_df = rs[rs['label'] == 1]
-
 
         fpr, tpr, thresholds = roc_curve(rs['label'],rs['probality'])
         lauc = auc(fpr,tpr)
@@ -64,8 +58,8 @@ class PRHelper():
 
         precision, recall, thresholds = precision_recall_curve(rs['label'],rs['probality'])
         average_precision = average_precision_score(rs['label'],rs['probality'])
-        print('AUC={0:0.2f}'.format(lauc))
-        print('PRA={0:0.2f}'.format(average_precision))
+        print('AUC={0:0.4f}'.format(lauc))
+        print('PRA={0:0.4f}'.format(average_precision))
         pr = pd.DataFrame()
         pr['precision'] = precision
         pr['recall'] = recall
@@ -75,7 +69,7 @@ class PRHelper():
         print(len(ths))
         print(pr.shape)
         pr['threshold'] = ths
-        pr.to_csv(self._fin+'.pr',index=False)
+        #pr.to_csv(self._fin+'.pr',index=False)
 
         # Plot Precision-Recall curve
 
